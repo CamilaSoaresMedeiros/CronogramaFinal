@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+  <title>Plano de Estudo Personalizado</title>
+  <style>
+
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+    html{
+      scroll-behavior: smooth;
+    }
+
+    @keyframes aparecer{
+      from{
+        opacity: 0;
+        scale: 0.5;
+      }
+      to{
+        opacity:1;
+        scale: 1;
+      }
+    }
+
+    .block{
+      animation: aparecer 5s linear;
+      animation-timeline: view();
+      animation-range:entry 0 ;
+    }
+
+
+    body {
+      font-family: 'Poppins';
+      color: #333;
+      margin: 0px;
+      overflow-x: hidden;
+    }
+
+    :root{
+      --shadow: 8px 8px 30px rgba(0,0,0,.05);
+    }
+
+    .nao-selecionavel {
+      user-select: none;
+    }
+
+    a{
+      text-decoration: none;
+    }
+
+
+    .container, #nav, #logo, #links_nav{
+      display: flex;
+    }
+
+    .container {
+      flex-direction: column;
+    }
+
+    h1, h2 {
+      text-align: center;
+    }
+
+    h3{
+      margin: 0px;
+    }
+
+    button{
+      position: relative;
+      display: block;
+      border: none;
+      background-color: #f4f4f4;
+      padding: 17px 60px;
+      font-size: 22px;
+      font-weight: 700;
+      text-transform: uppercase;
+      outline: none;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0,0,0,.2);
+      overflow: hidden;
+    }
+
+    button:hover{
+      box-shadow: 0 5px 30px rgba(0,0,0,.2);
+    }
+
+    button:hover span {
+      color: white;
+    }
+
+    button:after{
+      position: absolute;
+      content: "";
+      left: 0;
+      top: 0;
+      height: 490%;
+      width: 140%;
+      transition: all 0.5s ease-in-out;
+      background-color: #06B6FC;
+      transform: translate(-98%, -25%) rotate(45deg);
+    }
+
+    button:hover:after{
+      transform: translate(-9%, -25%) rotate(45deg);
+    }
+
+    #botao2::after{
+      height: 1600%;
+      width: 140%;
+    }
+
+    #botao2{
+      font-size: 16px;;
+    }
+
+    button span{
+      position: relative;
+      z-index: 1;
+      color: rgb(0, 0, 0);
+    }
+
+    #nav {
+      position: fixed;
+      display: flex;
+      justify-content: center; 
+      align-items: center;
+      width: 100%;    
+      padding: 20px 0px;
+      background-color: white;
+      z-index: 2;
+      top: 0;
+    }
+
+    #logo {
+      position: absolute;
+      left: 0;
+      display: flex;
+      align-items: center;
+      padding-left: 10px;
+    }
+
+    #logo img {
+      width: 50px;
+    }
+
+    #links_nav {
+      display: flex;
+      gap: 20px; 
+    }
+
+    #links_nav a{
+      color: #333;
+      position: relative;
+    }
+
+    #links_nav a:after{
+      content:"";
+      position: absolute;
+      background-color: #049DD9;
+      height: 3px;
+      width: 0%;
+      left:0;
+      bottom: -5px;
+      transition: 0.3s;
+    }
+
+    #links_nav a:hover{
+      color: black;
+      font-weight: 500;
+    }
+
+    #links_nav a:hover:after{
+      width: 100%;
+    }
+
+
+  #caixa_principal {
+    margin-top: 70px;
+    background-image: url('notepads-uma-chavena-de-cafe-e-um-mouse-de-computador-em-um-fundo-amarelo.jpg');
+    background-size: cover;
+    background-position: center bottom;
+    position: relative;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    padding-top: 10vh;
+    padding-left: 5vw; 
+  }
+
+  #caixa_principal button {
+    color: #333;
+    padding: 10px 50px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #fff;
+    transition: background-color 0.3s ease;
+  }
+
+  #caixa_principal p{
+    width: 400px;
+  }
+
+    #form {
+      --width: 400px;
+      --max-width: 100%;
+      --flex-shrink: 0;
+      --padding: 0px 50px;
+        width: 400px; /* ou 450px, como quiser */
+      max-width: 100%;
+      flex-shrink: 0; /* impede de encolher */
+      padding: 0px 50px;
+      background-color: rgba(255, 255, 255, .15);
+      box-shadow: 0 8px 32px rgba(31, 38, 135, .37);
+      border: 1px solid rgba(255, 255, 255, .18);
+      border-radius: 20px;
+      align-items: center;
+      margin-left: 50px;
+    }
+
+
+    #form label {
+      display: block;
+      margin-top: 15px;
+    }
+
+    #form input, #form select, #form button {
+      background-color: transparent;
+      width: 100%;
+      max-width: 500px;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+
+    button {
+      color: #333;
+      margin-bottom: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .titulo-principal {
+      width: 100%;
+      text-align: center;
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+
+    #cronograma-container::before {
+      content: "";
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      position: absolute;
+      left: -3%;
+      top: -15%;
+      background-color: #F2D335; 
+      background-image: url("Studying-rafiki.png");
+      background-size: cover; 
+      background-position: top center;
+      z-index: -1000;
+    }
+
+    #cronograma-container::after {
+      content: "";
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      position: absolute;
+      left: 90%;
+      top: 40%;
+      background-color: #F2D335; 
+      z-index: -1000;
+      background-color: #F2D335; 
+      background-image: url("2148565102.jpg"); 
+      background-size: cover; 
+    }
+
+    #cronograma-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      align-items: flex-start;
+      margin-top: 40px;
+      padding-bottom: 50px;
+      min-height: 70vh;
+      position: relative;
+    }
+
+    #cronograma {
+      display: flex;
+      justify-content: space-between; 
+      align-items: flex-start; 
+      gap: 20px; 
+      margin-top: 20px;
+      width: 100vw;
+      }
+
+
+    #result {
+      border-radius: 5px;
+      margin-top: 0; 
+      padding: 0px 50px;
+    }
+
+
+    #resultado {
+      display: none;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: flex-start;
+    }
+
+    #resultado table {
+      flex: 0 0 auto;
+    }
+
+
+    .materia-titulo {
+      margin-top: 25px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    #tabelas-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    #tabelas-container .materia-titulo {
+      width: 100%;
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+
+    #metodos-estudo {
+      padding: 20px;
+      background: linear-gradient(to top, #06B6FC, #8ddbfa);
+    }
+
+    #metodos-estudo h2 {
+      text-align: center;
+      margin-bottom: 30px;
+
+    }
+
+    #cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .metodo {
+      background-color: #f4f4f4;
+      border-radius: 12px;
+      box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+      width: 300px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .metodo:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+
+    .metodo img{
+      width: 100%;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+      object-fit: cover;
+      height: 150px;
+    }
+
+    .metodo h3 {
+      margin-top: 0;
+      text-align: center;
+    }
+    
+    #metodos-estudo #cards h3,
+    #metodos-estudo #cards ul,
+    #metodos-estudo #cards p {
+      margin: 10px;
+    }
+
+    .metodo ul {
+      padding-left: 20px;
+    }
+
+    .metodo p {
+      margin-bottom: 10px;
+    }
+
+
+    #avaliacao{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #ffdd02;
+    }
+
+    .caixa{
+      padding: 2em;
+      max-width: 576px;
+      width: 100%;
+      border-radius: .75rem;
+      box-shadow: var(--shadow);
+      text-align: center;
+      margin-bottom: 40px;
+      background-color: white;
+    }
+
+    .caixa h3{
+      font-size:20px;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .avaliacao{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      grid-gap: .5rem;
+      font-size: 2rem;
+      color: #FFBD13;
+      margin-bottom: 2rem;
+    }
+
+    .avaliacao .star{
+      cursor: pointer;
+    }
+
+    .avaliacao .star:hover{
+      transform: scale(1.1);
+    }
+
+    .avaliacao .star.active{
+      opacity: 0;
+      animation: animate .5s calc(var(--i)*.1s) ease-in-out forwards;
+    }
+
+    @keyframes animate{
+      0%{
+        opacity: 0;
+        transform:scale(1) ;
+      }
+
+      50%{
+        opacity: 1;
+        transform: scale(1.2);
+      }
+
+      100%{
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .botaoGrupo{
+      display: flex;
+      grid-gap:.5rem;
+      align-items: center;
+    }
+
+    .botaoGrupo .botaoEnviar{
+      padding: .75rem 1rem;
+      border-radius: .5rem;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      font-size: .875rem;
+      font-weight: 500;
+    }
+
+  </style>
+</head>
+<body  class="nao-selecionavel">
+  <div class="container">
+    <div   id="cabecalho">
+      <div id="nav">
+        <div id="logo">
+          <img src="logo.png" alt="logo">
+          <p>PlanejaEstudos</p>
+        </div>
+        <div id="links_nav">
+          <a href="#cabecalho">Home</a>
+          <a href="#metodos-estudo">Métodos</a>
+          <a href="#cronograma-container">Cronograma</a>
+          <a href="#avaliacao">Avalie-nos</a>
+        </div>
+      </div>
+      <div id="caixa_principal">
+            <h1 class="block">Crie o seu cronograma diário de estudos!!</h1>
+            <p class="block">Usamos métodos que ajudarão na fixação do tema para vestibulares e outras provas.</p>
+            <a href="#cronograma-container"><button class="block"><span>Crie</span></button></a>
+      </div>
+    </div>
+
+
+    <section id="metodos-estudo">
+      <h2 class="block">Métodos de Estudo</h2>
+      <div id="cards">
+        <div class="metodo block" >
+          <img src="https://media-exp1.licdn.com/dms/image/C5612AQHRlK2v9s-IPQ/article-cover_image-shrink_720_1280/0/1544556365388?e=2147483647&v=beta&t=Bc3eP68-l8i1zwqcZoFKB7_B9A4lOyopFvj_-30ao3M" alt="Imagem do método SQ3R">
+          <h3>Método SQ3R</h3>
+          <p>Esse método ajuda a compreender melhor os textos e lembrar do conteúdo por mais tempo. SQ3R significa:</p>
+          <ul>
+            <li><strong>Survey (Explorar):</strong> Leia rapidamente o texto, observando títulos, subtítulos e palavras em destaque.</li>
+            <li><strong>Question (Questionar):</strong> Transforme os títulos em perguntas. Isso aumenta o foco e o interesse.</li>
+            <li><strong>Read (Ler):</strong> Leia o conteúdo procurando as respostas para suas perguntas.</li>
+            <li><strong>Recite (Recitar):</strong> Explique com suas palavras o que entendeu, sem olhar o texto.</li>
+            <li><strong>Review (Revisar):</strong> Revise o conteúdo dias depois para reforçar o aprendizado.</li>
+          </ul>
+          <p><strong>Ideal para:</strong> textos longos, apostilas e capítulos de livros.</p>
+        </div>
+
+        <div class="metodo block">
+          <img src="https://cdn.sanity.io/images/9uwkxuld/production/5e371047c783b52510df2ff650c42409cd76a088-992x558.jpg?w=2000" alt="Imagem do método Feynman">
+          <h3>Método Feynman</h3>
+          <p>Uma técnica baseada na ideia de que ensinar é a melhor forma de aprender. Simples e eficaz.</p>
+          <ul>
+            <li><strong>Estudo inicial:</strong> Leia o conteúdo atentamente e anote os pontos principais.</li>
+            <li><strong>Explique com suas palavras:</strong> Finja que está ensinando alguém, usando termos simples.</li>
+            <li><strong>Identifique lacunas:</strong> Se travar ou não souber explicar algo, volte ao conteúdo e aprenda melhor.</li>
+            <li><strong>Revise e simplifique:</strong> Refine sua explicação até que fique clara e direta.</li>
+          </ul>
+          <p><strong>Ideal para:</strong> quem aprende melhor ensinando ou explicando.</p>
+        </div>
+
+        <div class="metodo block">
+          <img src="https://th.bing.com/th/id/OIP._S-2V_0pSn0JJBl6JEZEbQHaHZ?rs=1&pid=ImgDetMain" alt="Imagem do método de resumo">
+          <h3>Técnica de Resumo</h3>
+          <p>Consiste em resumir com suas palavras o conteúdo estudado, o que ajuda a fixar melhor.</p>
+          <ul>
+            <li><strong>Leitura Inicial:</strong> Leia o conteúdo com calma.</li>
+            <li><strong>Marcar Ideias:</strong> Grife partes importantes e palavras-chave.</li>
+            <li><strong>Escrever o Resumo:</strong> Reescreva com suas próprias palavras.</li>
+            <li><strong>Revisar o Resumo:</strong> Leia e corrija ou complemente se necessário.</li>
+          </ul>
+          <p><strong>Ideal para:</strong> quem aprende melhor escrevendo.</p>
+        </div>
+
+        <div class="metodo block">
+          <img src="https://i.pinimg.com/736x/b1/95/52/b19552ec107c675fed698d04544984d0.jpg" alt="Imagem do método Intercalado">
+          <h3>Estudo Intercalado</h3>
+          <p>Alternar o estudo de diferentes matérias em vez de focar apenas em uma.</p>
+          <ul>
+            <li><strong>Planejamento:</strong> Separe o tempo de estudo em blocos (ex: 1h para cada matéria).</li>
+            <li><strong>Intercalar Matérias:</strong> Varie os assuntos para evitar tédio e melhorar o raciocínio.</li>
+            <li><strong>Revisar e Ajustar:</strong> Veja o que funcionou e adapte o cronograma.</li>
+          </ul>
+          <p><strong>Ideal para:</strong> estudar várias disciplinas no mesmo dia.</p>
+        </div>
+
+        <div class="metodo block">
+          <img src="https://i.pinimg.com/736x/37/de/29/37de29028700923ca1e9b1125666787f.jpg" alt="Imagem do método Pomodoro">
+          <h3>Técnica Pomodoro</h3>
+          <p>Você divide seu tempo de estudo em ciclos de foco e pausa.</p>
+          <ul>
+            <li><strong>Foco:</strong> Estude por 25 minutos sem distrações.</li>
+            <li><strong>Pausa Curta:</strong> Descanse por 5 minutos.</li>
+            <li><strong>Pausa Longa:</strong> A cada 4 ciclos, descanse 15–30 minutos.</li>
+          </ul>
+          <p><strong>Ideal para:</strong> quem tem dificuldade de concentração ou está começando a criar o hábito de estudar.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <div id="cronograma-container">
+        <h2 class="titulo-principal block">Crie seu cronograma diário!</h2>
+
+      <div id="cronograma">
+        <div id="form" class="block">
+          <label for="horas">1. Quantas horas você pretende estudar por dia?</label>
+          <input type="number" id="horas" min="1" />
+          <label for="metodo">2. Qual método de estudo você pretende usar?</label>
+          <select id="metodo">
+            <option value="">Selecione</option>
+            <option value="SQ3R">Método SQ3R</option>
+            <option value="Feynman">Método Feynman</option>
+            <option value="Resumo">Técnica de Resumo</option>
+            <option value="Intercalado">Estudo Intercalado</option>
+            <option value="Pomodoro">Pomodoro</option>
+          </select>
+          <label for="qtdMaterias">3. Quantas matérias você quer estudar?</label>
+          <input type="number" id="qtdMaterias" min="1" />
+          <label for="materias">4. Quais são as matérias? (separe por vírgula)</label>
+          <input type="text" id="materias" placeholder="Ex: Matemática, Português, História" />
+          <button onclick="gerarCronograma()" id="botao2"><span>Gerar Cronograma</span></button>
+        </div>
+
+
+
+      <div id="result" >
+        <div id="resultado"></div>
+      </div>
+        </div>
+    </div>
+
+
+    
+    <section id="avaliacao">
+      <h2 class="block">Avalie o site</h2>   
+      <div class="caixa block">
+        <h3 style="font-size: 20px;" >De 1 a 5, quanto você gostou da página?</h3>
+        <form action="">
+          <div class="avaliacao block">
+            <input type="number" name="avaliar" hidden>
+            <i class='bx bx-star star' style="--i: 0;"></i>
+            <i class='bx bx-star star' style="--i: 1;"></i>
+            <i class='bx bx-star star' style="--i: 2;"></i>
+            <i class='bx bx-star star' style="--i: 3;"></i>
+            <i class='bx bx-star star' style="--i: 4;"></i>
+          </div>
+        </form>
+    
+      <div class="botaoGrupo block">
+        <button type="submit" class="botaoEnviar" onclick="enviarAvaliacao()"><span>Enviar Avaliação</span></button>
+      </div>   
+        <p id="mensagem-avaliacao" style="margin-top: 30px; color: #333; font-weight: bold; font-size: 20px;"></p>
+      </div>
+    </section>
+  </div>
+
+  <script>
+  function gerarCronograma() {
+    const horas = parseFloat(document.getElementById("horas").value);
+    const metodo = document.getElementById("metodo").value;
+    const qtdMaterias = parseInt(document.getElementById("qtdMaterias").value);
+    const materiasInput = document.getElementById("materias").value.trim();
+    const resultadoDiv = document.getElementById("resultado");
+    
+    resultadoDiv.style.display = "block";
+    resultadoDiv.style.padding = "20px";
+    resultadoDiv.innerHTML = "";
+
+    if (!horas || !metodo || !qtdMaterias || !materiasInput) {
+      alert("Por favor, preencha todos os campos.");
+      return;
+    }
+
+    if (horas>24){
+      alert("Um dia tem 24 horas, coloque um número até 24.")
+    }
+
+    const materias = materiasInput.split(',').map(m => m.trim());
+    
+    if (materias.length !== qtdMaterias) {
+      alert("O número de matérias não corresponde ao número informado.");
+      return;
+    }
+
+    const proporcoes = {
+      SQ3R: [
+        ["Survey", 0.10],
+        ["Question", 0.10],
+        ["Read", 0.40],
+        ["Recite", 0.25],
+        ["Review", 0.15]
+      ],
+      Feynman: [
+        ["Estudo inicial do tema", 0.25],
+        ["Explicação com suas palavras", 0.35],
+        ["Identificar lacunas e revisar", 0.25],
+        ["Simplificar e repetir", 0.15]
+      ],
+      Resumo: [
+        ["Leitura inicial", 0.15],
+        ["Marcar ideias", 0.25],
+        ["Escrever resumo", 0.40],
+        ["Revisar resumo", 0.20]
+      ],
+      Intercalado: [
+        ["Planejamento", 0.10],
+        ["Estudo intercalado", 0.80],
+        ["Revisão/Ajuste", 0.10]
+      ],
+      Pomodoro: [
+        ["Ciclo Pomodoro", horas]
+      ]
+    };
+
+    const headerCronograma = document.createElement("div");
+    headerCronograma.style.backgroundColor = "#e0f2f7"; 
+    headerCronograma.style.padding = "20px";
+    headerCronograma.style.borderRadius = "10px";
+    headerCronograma.style.marginBottom = "30px"; 
+    headerCronograma.style.textAlign = "center"; 
+    headerCronograma.style.boxShadow = "0 2px 8px rgba(0,0,0,0.1)";
+
+    const titulo = document.createElement("h3");
+    titulo.textContent = "Seu Cronograma de Estudos";
+    titulo.style.fontSize = "26px"; 
+    titulo.style.color = "#2c3e50"; 
+    titulo.style.marginBottom = "10px"; 
+    titulo.style.fontWeight = "600"; 
+    headerCronograma.appendChild(titulo);
+
+    const metodoEscolhido = document.createElement("p");
+    metodoEscolhido.innerHTML = `<strong>Método:</strong> <span style="color: #049DD9; font-weight: 700;">${metodo}</span>`;
+    metodoEscolhido.style.fontSize = "18px"; 
+    metodoEscolhido.style.color = "#555"; 
+    headerCronograma.appendChild(metodoEscolhido);
+
+    resultadoDiv.appendChild(headerCronograma);
+
+    const divTabelas = document.createElement("div");
+    divTabelas.id = "tabelas-container";
+    resultadoDiv.appendChild(divTabelas);
+
+    const horasPorMateria = metodo === "Pomodoro" ? horas : horas / qtdMaterias;
+
+    const containerFlex = document.createElement("div");
+    containerFlex.style.display = "flex";
+    containerFlex.style.flexWrap = "wrap";
+    containerFlex.style.justifyContent = "center"; 
+    containerFlex.style.gap = "20px";
+    resultadoDiv.appendChild(containerFlex);
+
+
+    materias.forEach((materia) => {
+    const blocoMateria = document.createElement("div");
+    blocoMateria.style.display = "flex";
+    blocoMateria.style.flexDirection = "column";
+    blocoMateria.style.flex = "0 0 calc(50% - 10px)"; 
+    blocoMateria.style.maxWidth = "450px"; 
+    blocoMateria.style.minWidth = "300px"; 
+
+    const subtitulo = document.createElement("p");
+    subtitulo.className = "materia-titulo";
+    subtitulo.textContent = `${materia}`;
+    subtitulo.style.fontWeight = "bold";
+    subtitulo.style.fontSize = "20px"; 
+    subtitulo.style.marginBottom = "15px"; 
+    subtitulo.style.textAlign = "center"; 
+    subtitulo.style.color = "#0468BF"; 
+    blocoMateria.appendChild(subtitulo);
+
+    const tabela = document.createElement("table");
+    tabela.style.borderCollapse = "collapse";
+    tabela.style.marginBottom = "20px";
+    tabela.style.borderRadius = "10px";
+    tabela.style.overflow = "hidden";
+    tabela.style.boxShadow = "0 6px 12px rgba(0, 0, 0, 0.15)";
+    tabela.style.width = "100%";
+    tabela.style.fontFamily = "Poppins, sans-serif";
+
+    const thead = document.createElement("thead");
+    thead.style.backgroundColor = "#4a90e2";
+    thead.style.color = "#ffffff";
+    thead.style.textTransform = "uppercase";
+    thead.style.letterSpacing = "1px";
+
+    const trHead = document.createElement("tr");
+    const thEtapa = document.createElement("th");
+    const thTempo = document.createElement("th");
+
+    thEtapa.textContent = "Etapa";
+    thTempo.textContent = "Tempo (min)";
+
+    thEtapa.style.padding = "15px 20px";
+    thEtapa.style.textAlign = "left";
+    thTempo.style.padding = "15px 20px";
+    thTempo.style.textAlign = "left";
+
+    trHead.appendChild(thEtapa);
+    trHead.appendChild(thTempo);
+    thead.appendChild(trHead);
+    tabela.appendChild(thead);
+
+    const tbody = document.createElement("tbody");
+
+    proporcoes[metodo].forEach(([etapa, proporcao], rowIndex) => {
+    const tr = document.createElement("tr");
+    const tdEtapa = document.createElement("td");
+    const tdTempo = document.createElement("td");
+
+    tdEtapa.textContent = etapa;
+    tdTempo.textContent = metodo === "Pomodoro"
+    ? `25 min foco + 5 min pausa (até ${horas * 60/qtdMaterias} min)`
+    : `${Math.round(horasPorMateria * proporcao * 60)} min`;
+
+    tdEtapa.style.padding = "12px 20px";
+    tdTempo.style.padding = "12px 20px";
+    tdEtapa.style.borderBottom = "1px solid #e0e0e0";
+    tdTempo.style.borderBottom = "1px solid #e0e0e0";
+    tdEtapa.style.color = "#333333";
+    tdTempo.style.color = "#333333";
+
+    if (rowIndex % 2 === 0) {
+        tr.style.backgroundColor = "#f0f8ff";
+    } else {
+        tr.style.backgroundColor = "#ffffff";
+    }
+
+    tr.onmouseover = function() {
+        this.style.backgroundColor = "#e6f2ff";
+    };
+    tr.onmouseout = function() {
+        if (rowIndex % 2 === 0) {
+            this.style.backgroundColor = "#f0f8ff";
+        } else {
+            this.style.backgroundColor = "#ffffff";
+        }
+    };
+
+    tr.appendChild(tdEtapa);
+    tr.appendChild(tdTempo);
+    tbody.appendChild(tr);
+    });
+
+    tabela.appendChild(tbody);
+    blocoMateria.appendChild(tabela);
+    containerFlex.appendChild(blocoMateria);
+  });
+  }
+
+    function enviarAvaliacao() {
+    const notaSelecionada = document.querySelector('.avaliacao input');
+    const mensagem = document.getElementById("mensagem-avaliacao");
+
+    if (!notaSelecionada.value || notaSelecionada.value === "0") {
+      alert("Por favor, selecione uma nota antes de enviar.");
+      return;
+    }
+
+    mensagem.textContent = "Obrigada pela sua avaliação!";
+    }
+
+    const allStar = document.querySelectorAll('.avaliacao .star')
+    const ratingValue = document.querySelector('.avaliacao input')
+
+    allStar.forEach((item, idx) => {
+      item.addEventListener('click', function() {
+        let click = 0;
+        ratingValue.value = idx + 1
+        allStar.forEach(i=> {
+          i.classList.replace('bxs-star', 'bx-star')
+          i.classList.remove('active')
+        })
+        for(let i=0; i<allStar.length; i++){
+          if(i<=idx){
+            allStar[i].classList.replace('bx-star', 'bxs-star')
+            allStar[i].classList.add('active')
+          } else{
+            allStar[i].style.setProperty('--i',click)
+            click++
+          }
+        }
+        })
+    })
+</script>
+</body>
+</html>
